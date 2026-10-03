@@ -1,0 +1,285 @@
+{
+    "$schema": "gigischema.json",
+    "version": "1.01",
+    "variables": [
+        {
+            "name": "MouseState",
+            "type": "Float4",
+            "dflt": "0.0f, 0.0f, 0.0f, 0.0f",
+            "visibility": "Host",
+            "transient": true
+        },
+        {
+            "name": "MouseStateLastFrame",
+            "type": "Float4",
+            "dflt": "0.0f, 0.0f, 0.0f, 0.0f",
+            "visibility": "Host",
+            "transient": true
+        },
+        {
+            "name": "iResolution",
+            "type": "Float3",
+            "dflt": "0.0f, 0.0f, 0.0f",
+            "visibility": "Host",
+            "transient": true
+        },
+        {
+            "name": "iTime",
+            "type": "Float",
+            "dflt": "0.0f",
+            "visibility": "Host",
+            "transient": true
+        },
+        {
+            "name": "iTimeDelta",
+            "type": "Float",
+            "dflt": "0.0f",
+            "visibility": "Host",
+            "transient": true
+        },
+        {
+            "name": "iFrameRate",
+            "type": "Float",
+            "dflt": "0.0f",
+            "visibility": "Host",
+            "transient": true
+        },
+        {
+            "name": "iFrame",
+            "type": "Int",
+            "dflt": "0",
+            "visibility": "Host",
+            "transient": true
+        },
+        {
+            "name": "iMouse",
+            "type": "Float4",
+            "dflt": "0.0f, 0.0f, 0.0f, 0.0f",
+            "visibility": "Host",
+            "transient": true
+        },
+        {
+            "name": "ViewMtx",
+            "type": "Float4x4",
+            "dflt": "1.0f, 0.0f, 0.0f, 0.0f,   0.0f, 1.0f, 0.0f, 0.0f,   0.0f, 0.0f, 1.0f, 0.0f,   0.0f, 0.0f, 0.0f, 1.0f",
+            "visibility": "Host",
+            "transient": true
+        },
+        {
+            "name": "InvViewMtx",
+            "type": "Float4x4",
+            "dflt": "1.0f, 0.0f, 0.0f, 0.0f,   0.0f, 1.0f, 0.0f, 0.0f,   0.0f, 0.0f, 1.0f, 0.0f,   0.0f, 0.0f, 0.0f, 1.0f",
+            "visibility": "Host",
+            "transient": true
+        },
+        {
+            "name": "ProjMtx",
+            "type": "Float4x4",
+            "dflt": "1.0f, 0.0f, 0.0f, 0.0f,   0.0f, 1.0f, 0.0f, 0.0f,   0.0f, 0.0f, 1.0f, 0.0f,   0.0f, 0.0f, 0.0f, 1.0f",
+            "visibility": "Host",
+            "transient": true
+        },
+        {
+            "name": "InvProjMtx",
+            "type": "Float4x4",
+            "dflt": "1.0f, 0.0f, 0.0f, 0.0f,   0.0f, 1.0f, 0.0f, 0.0f,   0.0f, 0.0f, 1.0f, 0.0f,   0.0f, 0.0f, 0.0f, 1.0f",
+            "visibility": "Host",
+            "transient": true
+        },
+        {
+            "name": "JitteredProjMtx",
+            "type": "Float4x4",
+            "dflt": "1.0f, 0.0f, 0.0f, 0.0f,   0.0f, 1.0f, 0.0f, 0.0f,   0.0f, 0.0f, 1.0f, 0.0f,   0.0f, 0.0f, 0.0f, 1.0f",
+            "visibility": "Host",
+            "transient": true
+        },
+        {
+            "name": "InvJitteredProjMtx",
+            "type": "Float4x4",
+            "dflt": "1.0f, 0.0f, 0.0f, 0.0f,   0.0f, 1.0f, 0.0f, 0.0f,   0.0f, 0.0f, 1.0f, 0.0f,   0.0f, 0.0f, 0.0f, 1.0f",
+            "visibility": "Host",
+            "transient": true
+        },
+        {
+            "name": "ViewProjMtx",
+            "type": "Float4x4",
+            "dflt": "1.0f, 0.0f, 0.0f, 0.0f,   0.0f, 1.0f, 0.0f, 0.0f,   0.0f, 0.0f, 1.0f, 0.0f,   0.0f, 0.0f, 0.0f, 1.0f",
+            "visibility": "Host",
+            "transient": true
+        },
+        {
+            "name": "InvViewProjMtx",
+            "type": "Float4x4",
+            "dflt": "1.0f, 0.0f, 0.0f, 0.0f,   0.0f, 1.0f, 0.0f, 0.0f,   0.0f, 0.0f, 1.0f, 0.0f,   0.0f, 0.0f, 0.0f, 1.0f",
+            "visibility": "Host",
+            "transient": true
+        },
+        {
+            "name": "JitteredViewProjMtx",
+            "type": "Float4x4",
+            "dflt": "1.0f, 0.0f, 0.0f, 0.0f,   0.0f, 1.0f, 0.0f, 0.0f,   0.0f, 0.0f, 1.0f, 0.0f,   0.0f, 0.0f, 0.0f, 1.0f",
+            "visibility": "Host",
+            "transient": true
+        },
+        {
+            "name": "InvJitteredViewProjMtx",
+            "type": "Float4x4",
+            "dflt": "1.0f, 0.0f, 0.0f, 0.0f,   0.0f, 1.0f, 0.0f, 0.0f,   0.0f, 0.0f, 1.0f, 0.0f,   0.0f, 0.0f, 0.0f, 1.0f",
+            "visibility": "Host",
+            "transient": true
+        },
+        {
+            "name": "CameraPos",
+            "type": "Float3",
+            "dflt": "0.0f, 0.0f, 0.0f",
+            "visibility": "Host",
+            "transient": true
+        },
+        {
+            "name": "CameraUp",
+            "type": "Float3",
+            "dflt": "0.0f, 1.0f, 0.0f",
+            "visibility": "Host",
+            "transient": true
+        },
+        {
+            "name": "CameraLeft",
+            "type": "Float3",
+            "dflt": "-1.0f, 0.0f, 0.0f",
+            "visibility": "Host",
+            "transient": true
+        },
+        {
+            "name": "CameraForward",
+            "type": "Float3",
+            "dflt": "0.0f, 0.0f, 1.0f",
+            "visibility": "Host",
+            "transient": true
+        },
+        {
+            "name": "CameraFOV",
+            "type": "Float",
+            "dflt": "0.0f",
+            "visibility": "Host",
+            "transient": true
+        },
+        {
+            "name": "CameraAltitudeAzimuth",
+            "type": "Float2",
+            "dflt": "0.0f, 0.0f",
+            "visibility": "Host",
+            "transient": true
+        },
+        {
+            "name": "CameraChanged",
+            "type": "Bool",
+            "dflt": "false",
+            "visibility": "Host",
+            "transient": true
+        },
+        {
+            "name": "CameraJitter",
+            "type": "Float2",
+            "dflt": "0.5f, 0.5f",
+            "visibility": "Host",
+            "transient": true
+        },
+        {
+            "name": "CameraJitterRaw",
+            "type": "Float2",
+            "dflt": "0.5f, 0.5f",
+            "visibility": "Host",
+            "transient": true
+        },
+        {
+            "name": "CameraNearPlane",
+            "type": "Float",
+            "dflt": "0.0f",
+            "visibility": "Host",
+            "transient": true
+        },
+        {
+            "name": "CameraFarPlane",
+            "type": "Float",
+            "dflt": "0.0f",
+            "visibility": "Host",
+            "transient": true
+        },
+        {
+            "name": "ShadingRateImageTileSize",
+            "type": "Uint",
+            "dflt": "16",
+            "visibility": "Host",
+            "transient": true
+        },
+        {
+            "name": "WindowSize",
+            "type": "Float2",
+            "dflt": "1.0f, 1.0f",
+            "visibility": "Host",
+            "transient": true
+        }
+    ],
+    "shaders": [
+        {
+            "name": "Render",
+            "fileName": "Render.hlsl",
+            "resources": [
+                {
+                    "name": "Final",
+                    "access": "UAV",
+                    "type": "Texture"
+                }
+            ]
+        }
+    ],
+    "nodes": [
+        {
+            "resourceTexture": {
+                "name": "Final",
+                "editorPos": [
+                    -85.0,
+                    -46.0
+                ],
+                "transient": false,
+                "format": {
+                    "format": "RGBA16_Float"
+                },
+                "size": {
+                    "multiply": [
+                        512,
+                        512,
+                        1
+                    ]
+                }
+            }
+        },
+        {
+            "actionComputeShader": {
+                "name": "Node 0",
+                "editorPos": [
+                    131.0,
+                    -46.0
+                ],
+                "linkProperties": [
+                    {}
+                ],
+                "connections": [
+                    {
+                        "srcPin": "Final",
+                        "dstNode": "Final",
+                        "dstPin": "resource"
+                    }
+                ],
+                "shader": {
+                    "name": "Render"
+                },
+                "dispatchSize": {
+                    "node": {
+                        "name": "Final"
+                    }
+                }
+            }
+        }
+    ]
+}
