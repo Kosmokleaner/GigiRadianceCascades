@@ -18,8 +18,8 @@
         },
         {
             "name": "iResolution",
-            "type": "Float3",
-            "dflt": "0.0f, 0.0f, 0.0f",
+            "type": "Uint2",
+            "dflt": "512,512",
             "visibility": "Host",
             "transient": true
         },
@@ -222,13 +222,34 @@
     ],
     "shaders": [
         {
-            "name": "Render",
-            "fileName": "Render.hlsl",
+            "name": "Draw",
+            "fileName": "Draw.hlsl",
             "resources": [
                 {
-                    "name": "Final",
+                    "name": "g_Source",
                     "access": "UAV",
                     "type": "Texture"
+                }
+            ]
+        },
+        {
+            "name": "Propagate",
+            "fileName": "Propagate.hlsl",
+            "resources": [
+                {
+                    "name": "g_Source",
+                    "access": "SRV",
+                    "type": "Texture"
+                },
+                {
+                    "name": "g_Radiance",
+                    "access": "UAV",
+                    "type": "Texture"
+                }
+            ],
+            "samplers": [
+                {
+                    "name": "g_bilinear"
                 }
             ]
         }
@@ -236,7 +257,52 @@
     "nodes": [
         {
             "resourceTexture": {
-                "name": "Final",
+                "name": "Radiance",
+                "editorPos": [
+                    59.0,
+                    34.0
+                ],
+                "transient": false,
+                "format": {
+                    "format": "RGBA16_Float"
+                },
+                "size": {
+                    "node": {
+                        "name": "Source"
+                    }
+                }
+            }
+        },
+        {
+            "actionComputeShader": {
+                "name": "Draw",
+                "editorPos": [
+                    53.0,
+                    -46.0
+                ],
+                "linkProperties": [
+                    {}
+                ],
+                "connections": [
+                    {
+                        "srcPin": "g_Source",
+                        "dstNode": "Source",
+                        "dstPin": "resource"
+                    }
+                ],
+                "shader": {
+                    "name": "Draw"
+                },
+                "dispatchSize": {
+                    "node": {
+                        "name": "Source"
+                    }
+                }
+            }
+        },
+        {
+            "resourceTexture": {
+                "name": "Source",
                 "editorPos": [
                     -85.0,
                     -46.0
@@ -246,37 +312,41 @@
                     "format": "RGBA16_Float"
                 },
                 "size": {
-                    "multiply": [
-                        512,
-                        512,
-                        1
-                    ]
+                    "variable": {
+                        "name": "iResolution"
+                    }
                 }
             }
         },
         {
             "actionComputeShader": {
-                "name": "Node 0",
+                "name": "Propagate",
                 "editorPos": [
-                    131.0,
-                    -46.0
+                    267.0,
+                    -33.0
                 ],
                 "linkProperties": [
+                    {},
                     {}
                 ],
                 "connections": [
                     {
-                        "srcPin": "Final",
-                        "dstNode": "Final",
+                        "srcPin": "g_Source",
+                        "dstNode": "Draw",
+                        "dstPin": "g_Source"
+                    },
+                    {
+                        "srcPin": "g_Radiance",
+                        "dstNode": "Radiance",
                         "dstPin": "resource"
                     }
                 ],
                 "shader": {
-                    "name": "Render"
+                    "name": "Propagate"
                 },
                 "dispatchSize": {
-                    "node": {
-                        "name": "Final"
+                    "variable": {
+                        "name": "iResolution"
                     }
                 }
             }

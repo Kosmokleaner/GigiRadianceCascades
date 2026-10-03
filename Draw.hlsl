@@ -11,14 +11,15 @@ void main(uint2 DTid : SV_DispatchThreadID)
 
 	float2 pxMousePos = mouseInput.xy + 0.5f;
 
+	float brushSize = 10.0f;
 	float dist = length(pxPos - pxMousePos);
-	float mask = saturate(3.0f - dist);
+	float mask = saturate(brushSize - dist);
 
 
-	float3 color = Final[DTid].rgb;
+	float3 color = g_Source[DTid].rgb;
 
 	if(mouseInput.z == 1)
 		color = lerp(color, float3(1,1,1), mask);
 	
-	Final[DTid] = float4(color,1);
+	g_Source[DTid] = float4(color,1);
 }
