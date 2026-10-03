@@ -280,7 +280,8 @@
             ],
             "samplers": [
                 {
-                    "name": "g_bilinear"
+                    "name": "g_bilinear",
+                    "addressMode": "Border"
                 }
             ]
         },
@@ -301,7 +302,8 @@
             ],
             "samplers": [
                 {
-                    "name": "g_bilinear"
+                    "name": "g_bilinear",
+                    "addressMode": "Border"
                 }
             ]
         },
@@ -330,6 +332,11 @@
                     "type": "Texture"
                 },
                 {
+                    "name": "g_Mip4",
+                    "access": "SRV",
+                    "type": "Texture"
+                },
+                {
                     "name": "g_Final",
                     "access": "UAV",
                     "type": "Texture"
@@ -337,7 +344,8 @@
             ],
             "samplers": [
                 {
-                    "name": "g_bilinear"
+                    "name": "g_bilinear",
+                    "addressMode": "Border"
                 }
             ]
         }
@@ -475,10 +483,11 @@
             "actionComputeShader": {
                 "name": "FinalCS",
                 "editorPos": [
-                    744.0,
+                    1080.0,
                     502.0
                 ],
                 "linkProperties": [
+                    {},
                     {},
                     {},
                     {},
@@ -504,6 +513,11 @@
                     {
                         "srcPin": "g_Mip3",
                         "dstNode": "Downsample3CS",
+                        "dstPin": "g_MipOut"
+                    },
+                    {
+                        "srcPin": "g_Mip4",
+                        "dstNode": "Downsample4CS",
                         "dstPin": "g_MipOut"
                     },
                     {
@@ -793,6 +807,111 @@
                     "divide": [
                         2,
                         2,
+                        1
+                    ]
+                }
+            }
+        },
+        {
+            "actionComputeShader": {
+                "name": "Propagate4CS",
+                "editorPos": [
+                    933.0,
+                    -46.0
+                ],
+                "linkProperties": [
+                    {},
+                    {}
+                ],
+                "connections": [
+                    {
+                        "srcPin": "g_Source",
+                        "dstNode": "Propagate3CS ",
+                        "dstPin": "g_Source"
+                    },
+                    {
+                        "srcPin": "g_Radiance",
+                        "dstNode": "Downsample3CS",
+                        "dstPin": "g_Radiance"
+                    }
+                ],
+                "shader": {
+                    "name": "Propagate"
+                },
+                "dispatchSize": {
+                    "variable": {
+                        "name": "iResolution"
+                    }
+                },
+                "defines": [
+                    {
+                        "name": "OUT_MIP",
+                        "value": "4"
+                    }
+                ]
+            }
+        },
+        {
+            "actionComputeShader": {
+                "name": "Downsample4CS",
+                "editorPos": [
+                    933.0,
+                    34.0
+                ],
+                "linkProperties": [
+                    {},
+                    {}
+                ],
+                "connections": [
+                    {
+                        "srcPin": "g_Radiance",
+                        "dstNode": "Propagate4CS",
+                        "dstPin": "g_Radiance"
+                    },
+                    {
+                        "srcPin": "g_MipOut",
+                        "dstNode": "Mip4",
+                        "dstPin": "resource"
+                    }
+                ],
+                "shader": {
+                    "name": "Downsample"
+                },
+                "dispatchSize": {
+                    "variable": {
+                        "name": "iResolution"
+                    },
+                    "divide": [
+                        16,
+                        16,
+                        1
+                    ]
+                },
+                "defines": [
+                    {
+                        "name": "OUT_MIP",
+                        "value": "4"
+                    }
+                ]
+            }
+        },
+        {
+            "resourceTexture": {
+                "name": "Mip4",
+                "editorPos": [
+                    939.0,
+                    114.0
+                ],
+                "format": {
+                    "format": "RGBA16_Float"
+                },
+                "size": {
+                    "variable": {
+                        "name": "iResolution"
+                    },
+                    "divide": [
+                        16,
+                        16,
                         1
                     ]
                 }

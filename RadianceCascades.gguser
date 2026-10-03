@@ -2,10 +2,10 @@
     "version": "2.0",
     "snapshot": {
         "resourceViewNodeIndex": 5,
-        "resourceViewResourceIndex": 6,
+        "resourceViewResourceIndex": 7,
         "cameraAltitudeAzimuth": [
-            -1.079999566078186,
-            0.5249995589256287
+            0.08061984181404114,
+            3.4831790924072267
         ],
         "savedVariables": [
             {
@@ -14,7 +14,7 @@
             },
             {
                 "name": "iBrushSize",
-                "value": "11.421000"
+                "value": "5.737000"
             },
             {
                 "name": "Clear",

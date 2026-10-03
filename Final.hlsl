@@ -19,9 +19,10 @@ void main(uint2 DTid : SV_DispatchThreadID)
 	// ambient
 	color += 0.2f;
 
-	color += g_Mip1.SampleLevel(g_bilinear, uv, 0.0f).rgb * 1.0f;
-	color += g_Mip2.SampleLevel(g_bilinear, uv, 0.0f).rgb * 0.5f;
-	color += g_Mip3.SampleLevel(g_bilinear, uv, 0.0f).rgb * 0.25f;
+	color += g_Mip1.SampleLevel(g_bilinear, uv, 0.0f).rgb;
+	color += g_Mip2.SampleLevel(g_bilinear, uv, 0.0f).rgb;
+	color += g_Mip3.SampleLevel(g_bilinear, uv, 0.0f).rgb;
+	color += g_Mip4.SampleLevel(g_bilinear, uv, 0.0f).rgb;
 
 	color *= albedo;
 

@@ -23,18 +23,20 @@ void main(uint2 DTid : SV_DispatchThreadID)
 
 	float3 color = 0;
 
-	const float d = 4;
+	const float d = 1;
+	const uint scale = 4;
 
 	float transmission = 1.0f;
-	[loop] for(uint step = g_tileSize; step < g_tileSize * 2; ++step)
+	[loop] for(uint step = g_tileSize * scale; step < g_tileSize * scale * 2; ++step)
 	{
 		float2 uv = (pxPos + (step * d) * sc) / /*$(Variable:iResolution)*/;
 
 		float4 source = g_Source.SampleLevel(g_bilinear, uv, 0.0f);
 
-		color += source.rgb * transmission;
-		transmission *= (1.0f - source.a);
+		color *= (1.0f - source.a);
+		color += source.rgb * 4.0f / step;
 	}
+	color /= scale;
 
 	g_Radiance[DTid] = float4(color, 1);
 }

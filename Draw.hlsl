@@ -15,28 +15,30 @@ void main(uint2 DTid : SV_DispatchThreadID)
 	float dist = length(pxPos - pxMousePos);
 	float mask = saturate(brushSize - dist);
 
-	float4 rgba = g_Source[DTid].rgba;
+	float4 dstColor = g_Source[DTid].rgba;
 
 	if(mouseInput.z == 1)
 	{
-		float3 color = 0;
+		float4 srcColor = 0;
 
 		uint iColor = /*$(Variable:iColor)*/;
 
-		if(iColor == 1)
-			color = float3(0.9f,0.7f, 0.5f) * 10;
+		if (iColor == 0)
+			srcColor = float4(0, 0, 0, 1);
+		else if(iColor == 1)
+			srcColor = float4(0.9f,0.7f, 0.5f, 0) * 10;
 		else if (iColor == 2)
-			color = float3(1,0,0);
+			srcColor = float4(1, 0, 0, 0);
 		else if (iColor == 3)
-			color = float3(0, 1, 0);
+			srcColor = float4(0, 1, 0, 0);
 		else if (iColor == 4)
-			color = float3(0, 0, 1);
+			srcColor = float4(0, 0, 1, 0);
 
-		rgba = lerp(rgba, float4(color,1), mask);
+		dstColor = lerp(dstColor, srcColor, mask);
 	}
 
 	if(/*$(Variable:Clear)*/)
-		rgba = 0;
+		dstColor = 0;
 	
-	g_Source[DTid] = rgba;
+	g_Source[DTid] = dstColor;
 }
