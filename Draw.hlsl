@@ -26,13 +26,13 @@ void main(uint2 DTid : SV_DispatchThreadID)
 		if (iColor == 0)
 			srcColor = float4(0, 0, 0, 1);
 		else if(iColor == 1)
-			srcColor = float4(0.9f,0.7f, 0.5f, 0) * 10;
+			srcColor = float4(float3(0.9f, 0.7f, 0.5f) * 10, 1);
 		else if (iColor == 2)
-			srcColor = float4(1, 0, 0, 0);
+			srcColor = float4(5, 0, 0, 1);
 		else if (iColor == 3)
-			srcColor = float4(0, 1, 0, 0);
+			srcColor = float4(0, 5, 0, 1);
 		else if (iColor == 4)
-			srcColor = float4(0, 0, 1, 0);
+			srcColor = float4(0, 0, 5, 1);
 
 		dstColor = lerp(dstColor, srcColor, mask);
 	}

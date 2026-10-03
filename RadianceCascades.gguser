@@ -1,11 +1,11 @@
 {
     "version": "2.0",
     "snapshot": {
-        "resourceViewNodeIndex": 5,
-        "resourceViewResourceIndex": 7,
+        "resourceViewNodeIndex": 15,
+        "resourceViewResourceIndex": 4,
         "cameraAltitudeAzimuth": [
-            0.08061984181404114,
-            3.4831790924072267
+            -1.3093806505203248,
+            0.6749914288520813
         ],
         "savedVariables": [
             {
@@ -19,6 +19,10 @@
             {
                 "name": "Clear",
                 "value": "false"
+            },
+            {
+                "name": "iIntervalScale",
+                "value": "1.301000"
             }
         ]
     }

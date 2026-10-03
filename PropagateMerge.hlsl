@@ -1,7 +1,7 @@
 
 #include "common.hlsl"
 
-#define HAS_UPPER 0
+#define HAS_UPPER 1
 
 /*$(ShaderResources)*/
 
