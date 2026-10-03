@@ -254,6 +254,27 @@
             ]
         },
         {
+            "name": "Downsample",
+            "fileName": "Downsample.hlsl",
+            "resources": [
+                {
+                    "name": "g_Radiance",
+                    "access": "SRV",
+                    "type": "Texture"
+                },
+                {
+                    "name": "g_MipOut",
+                    "access": "UAV",
+                    "type": "Texture"
+                }
+            ],
+            "samplers": [
+                {
+                    "name": "g_bilinear"
+                }
+            ]
+        },
+        {
             "name": "Final",
             "fileName": "Final.hlsl",
             "resources": [
@@ -263,7 +284,7 @@
                     "type": "Texture"
                 },
                 {
-                    "name": "g_Radiance",
+                    "name": "g_Mip3",
                     "access": "SRV",
                     "type": "Texture"
                 },
@@ -290,6 +311,7 @@
         {
             "resourceTexture": {
                 "name": "Radiance",
+                "comment": "with mips",
                 "editorPos": [
                     59.0,
                     34.0
@@ -302,7 +324,8 @@
                     "node": {
                         "name": "Source"
                     }
-                }
+                },
+                "numMips": 0
             }
         },
         {
@@ -387,8 +410,8 @@
             "resourceTexture": {
                 "name": "Final",
                 "editorPos": [
-                    171.0,
-                    98.0
+                    763.0,
+                    66.0
                 ],
                 "format": {
                     "format": "RGBA8_Unorm_sRGB"
@@ -404,7 +427,7 @@
             "actionComputeShader": {
                 "name": "FinalCS",
                 "editorPos": [
-                    480.0,
+                    747.0,
                     -33.0
                 ],
                 "linkProperties": [
@@ -419,9 +442,9 @@
                         "dstPin": "g_Source"
                     },
                     {
-                        "srcPin": "g_Radiance",
-                        "dstNode": "PropagateCS",
-                        "dstPin": "g_Radiance"
+                        "srcPin": "g_Mip3",
+                        "dstNode": "Downsample3",
+                        "dstPin": "g_MipOut"
                     },
                     {
                         "srcPin": "g_Final",
@@ -436,6 +459,66 @@
                     "variable": {
                         "name": "iResolution"
                     }
+                }
+            }
+        },
+        {
+            "resourceTexture": {
+                "name": "Mip3",
+                "editorPos": [
+                    347.0,
+                    82.0
+                ],
+                "format": {
+                    "format": "RGBA16_Float"
+                },
+                "size": {
+                    "variable": {
+                        "name": "iResolution"
+                    },
+                    "divide": [
+                        8,
+                        8,
+                        1
+                    ]
+                }
+            }
+        },
+        {
+            "actionComputeShader": {
+                "name": "Downsample3",
+                "editorPos": [
+                    512.0,
+                    32.0
+                ],
+                "linkProperties": [
+                    {},
+                    {}
+                ],
+                "connections": [
+                    {
+                        "srcPin": "g_Radiance",
+                        "dstNode": "PropagateCS",
+                        "dstPin": "g_Radiance"
+                    },
+                    {
+                        "srcPin": "g_MipOut",
+                        "dstNode": "Mip3",
+                        "dstPin": "resource"
+                    }
+                ],
+                "shader": {
+                    "name": "Downsample"
+                },
+                "dispatchSize": {
+                    "variable": {
+                        "name": "iResolution"
+                    },
+                    "divide": [
+                        8,
+                        8,
+                        1
+                    ]
                 }
             }
         }
