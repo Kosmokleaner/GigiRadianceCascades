@@ -252,6 +252,38 @@
                     "name": "g_bilinear"
                 }
             ]
+        },
+        {
+            "name": "Final",
+            "fileName": "Final.hlsl",
+            "resources": [
+                {
+                    "name": "g_Source",
+                    "access": "SRV",
+                    "type": "Texture"
+                },
+                {
+                    "name": "g_Radiance",
+                    "access": "SRV",
+                    "type": "Texture"
+                },
+                {
+                    "name": "g_Final",
+                    "access": "UAV",
+                    "type": "Texture"
+                }
+            ],
+            "samplers": [
+                {
+                    "name": "g_bilinear"
+                }
+            ]
+        }
+    ],
+    "fileCopies": [
+        {
+            "fileName": "common.hlsl",
+            "type": "Shader"
         }
     ],
     "nodes": [
@@ -275,7 +307,7 @@
         },
         {
             "actionComputeShader": {
-                "name": "Draw",
+                "name": "DrawCS",
                 "editorPos": [
                     53.0,
                     -46.0
@@ -309,7 +341,7 @@
                 ],
                 "transient": false,
                 "format": {
-                    "format": "RGBA16_Float"
+                    "format": "RGBA8_Unorm_sRGB"
                 },
                 "size": {
                     "variable": {
@@ -320,7 +352,7 @@
         },
         {
             "actionComputeShader": {
-                "name": "Propagate",
+                "name": "PropagateCS",
                 "editorPos": [
                     267.0,
                     -33.0
@@ -332,7 +364,7 @@
                 "connections": [
                     {
                         "srcPin": "g_Source",
-                        "dstNode": "Draw",
+                        "dstNode": "DrawCS",
                         "dstPin": "g_Source"
                     },
                     {
@@ -343,6 +375,62 @@
                 ],
                 "shader": {
                     "name": "Propagate"
+                },
+                "dispatchSize": {
+                    "variable": {
+                        "name": "iResolution"
+                    }
+                }
+            }
+        },
+        {
+            "resourceTexture": {
+                "name": "Final",
+                "editorPos": [
+                    171.0,
+                    98.0
+                ],
+                "format": {
+                    "format": "RGBA8_Unorm_sRGB"
+                },
+                "size": {
+                    "variable": {
+                        "name": "iResolution"
+                    }
+                }
+            }
+        },
+        {
+            "actionComputeShader": {
+                "name": "FinalCS",
+                "editorPos": [
+                    480.0,
+                    -33.0
+                ],
+                "linkProperties": [
+                    {},
+                    {},
+                    {}
+                ],
+                "connections": [
+                    {
+                        "srcPin": "g_Source",
+                        "dstNode": "PropagateCS",
+                        "dstPin": "g_Source"
+                    },
+                    {
+                        "srcPin": "g_Radiance",
+                        "dstNode": "PropagateCS",
+                        "dstPin": "g_Radiance"
+                    },
+                    {
+                        "srcPin": "g_Final",
+                        "dstNode": "Final",
+                        "dstPin": "resource"
+                    }
+                ],
+                "shader": {
+                    "name": "Final"
                 },
                 "dispatchSize": {
                     "variable": {

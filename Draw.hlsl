@@ -16,10 +16,10 @@ void main(uint2 DTid : SV_DispatchThreadID)
 	float mask = saturate(brushSize - dist);
 
 
-	float3 color = g_Source[DTid].rgb;
+	float4 rgba = g_Source[DTid].rgba;
 
 	if(mouseInput.z == 1)
-		color = lerp(color, float3(1,1,1), mask);
+		rgba = lerp(rgba, float4(1,1,1,1), mask);
 	
-	g_Source[DTid] = float4(color,1);
+	g_Source[DTid] = rgba;
 }

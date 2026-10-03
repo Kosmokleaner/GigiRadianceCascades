@@ -1,11 +1,11 @@
 {
     "version": "2.0",
     "snapshot": {
-        "resourceViewNodeIndex": 3,
-        "resourceViewResourceIndex": 3,
+        "resourceViewNodeIndex": 5,
+        "resourceViewResourceIndex": 4,
         "cameraAltitudeAzimuth": [
-            -1.1543807983398438,
-            6.048185348510742
+            -1.539380431175232,
+            3.124999761581421
         ]
     }
 }

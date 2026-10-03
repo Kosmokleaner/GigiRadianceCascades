@@ -1,23 +1,20 @@
 
-/*$(ShaderResources)*/
+#include "common.hlsl"
 
-static float PI = 3.14159265f;
+/*$(ShaderResources)*/
 
 [numthreads(8, 8, 1)]
 void main(uint2 DTid : SV_DispatchThreadID)
 {
     float2 pxPos = DTid + 0.5f;
 
-//	float4 sourceRGBA = Source[DTid];
-
-	uint tileSize = 4;
-
-	// 0..tileSize-1, 0..tileSize-1
-	uint2 localPos = DTid % tileSize;
-	// 0..tileSize*tileSize-1
-	uint angleInt = localPos.x + localPos.y * tileSize;
+	// 0..g_tileSize-1, 0..g_tileSize-1
+	uint2 localPos = DTid % g_tileSize;
+	// 0..g_tileSize*g_tileSize-1
+	// todo: improve
+	uint angleInt = localPos.x + localPos.y * g_tileSize;
 	// 0..2*PI
-	float angle = angleInt * (PI * 2 / tileSize / tileSize);
+	float angle = angleInt * (PI * 2 / g_tileSize / g_tileSize);
 	float2 sc = float2(sin(angle), cos(angle));
 
 	float3 color;
