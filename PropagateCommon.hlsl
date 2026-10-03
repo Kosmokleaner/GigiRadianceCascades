@@ -8,6 +8,9 @@
 // probe spacing in pixels, each probe stores T*T pre-averaged directions (4 rays each)
 static const uint T = 1u << CASCADE;
 
+// g_Occupancy cell size in pixels, must match Occupancy.hlsl
+static const float OCC_CELL = 8.0f;
+
 // front to back from a to b: rgb = gathered radiance, a = transmittance left at b
 float4 March(float2 a, float2 b, float2 res)
 {
@@ -17,10 +20,23 @@ float4 March(float2 a, float2 b, float2 res)
 	float len = length(b - a);
 	float2 dir = (b - a) / max(len, 1e-6f);
 
-	// todo: larger steps for coarse cascades or distance field
-	[loop] for (float t = 0; t < len; t += 1.0f)
+	// todo: distance field
+	[loop] for (float t = 0; t < len; )
 	{
-		float4 s = g_Source.SampleLevel(g_bilinear, (a + t * dir) / res, 0.0f);
+		float2 pos = a + t * dir;
+
+		// left the screen, nothing more to gather
+		if (any(pos < 0) || any(pos >= res))
+			break;
+
+		// nothing within OCC_CELL pixels: skip ahead without sampling (-1 for the bilinear footprint)
+		if (g_Occupancy[uint2(pos / OCC_CELL)].r == 0)
+		{
+			t += OCC_CELL - 1.0f;
+			continue;
+		}
+
+		float4 s = g_Source.SampleLevel(g_bilinear, pos / res, 0.0f);
 
 		radiance += trans * s.rgb * s.a;
 		trans *= 1.0f - s.a;
@@ -30,6 +46,7 @@ float4 March(float2 a, float2 b, float2 res)
 			trans = 0;
 			break;
 		}
+		t += 1.0f;
 	}
 	return float4(radiance, trans);
 }

@@ -284,6 +284,11 @@
                     "type": "Texture"
                 },
                 {
+                    "name": "g_Occupancy",
+                    "access": "SRV",
+                    "type": "Texture"
+                },
+                {
                     "name": "g_Radiance",
                     "access": "UAV",
                     "type": "Texture"
@@ -302,6 +307,11 @@
             "resources": [
                 {
                     "name": "g_Source",
+                    "access": "SRV",
+                    "type": "Texture"
+                },
+                {
+                    "name": "g_Occupancy",
                     "access": "SRV",
                     "type": "Texture"
                 },
@@ -339,6 +349,22 @@
                 },
                 {
                     "name": "g_Final",
+                    "access": "UAV",
+                    "type": "Texture"
+                }
+            ]
+        },
+        {
+            "name": "Occupancy",
+            "fileName": "Occupancy.hlsl",
+            "resources": [
+                {
+                    "name": "g_Source",
+                    "access": "SRV",
+                    "type": "Texture"
+                },
+                {
+                    "name": "g_Occupancy",
                     "access": "UAV",
                     "type": "Texture"
                 }
@@ -446,13 +472,19 @@
                 "linkProperties": [
                     {},
                     {},
+                    {},
                     {}
                 ],
                 "connections": [
                     {
                         "srcPin": "g_Source",
-                        "dstNode": "Propagate4CS",
+                        "dstNode": "DrawCS",
                         "dstPin": "g_Source"
+                    },
+                    {
+                        "srcPin": "g_Occupancy",
+                        "dstNode": "OccupancyCS",
+                        "dstPin": "g_Occupancy"
                     },
                     {
                         "srcPin": "g_Upper",
@@ -508,13 +540,19 @@
                 "linkProperties": [
                     {},
                     {},
+                    {},
                     {}
                 ],
                 "connections": [
                     {
                         "srcPin": "g_Source",
-                        "dstNode": "Propagate3CS",
+                        "dstNode": "DrawCS",
                         "dstPin": "g_Source"
+                    },
+                    {
+                        "srcPin": "g_Occupancy",
+                        "dstNode": "OccupancyCS",
+                        "dstPin": "g_Occupancy"
                     },
                     {
                         "srcPin": "g_Upper",
@@ -570,13 +608,19 @@
                 "linkProperties": [
                     {},
                     {},
+                    {},
                     {}
                 ],
                 "connections": [
                     {
                         "srcPin": "g_Source",
-                        "dstNode": "Propagate2CS",
+                        "dstNode": "DrawCS",
                         "dstPin": "g_Source"
+                    },
+                    {
+                        "srcPin": "g_Occupancy",
+                        "dstNode": "OccupancyCS",
+                        "dstPin": "g_Occupancy"
                     },
                     {
                         "srcPin": "g_Upper",
@@ -632,13 +676,19 @@
                 "linkProperties": [
                     {},
                     {},
+                    {},
                     {}
                 ],
                 "connections": [
                     {
                         "srcPin": "g_Source",
-                        "dstNode": "Propagate1CS",
+                        "dstNode": "DrawCS",
                         "dstPin": "g_Source"
+                    },
+                    {
+                        "srcPin": "g_Occupancy",
+                        "dstNode": "OccupancyCS",
+                        "dstPin": "g_Occupancy"
                     },
                     {
                         "srcPin": "g_Upper",
@@ -693,6 +743,7 @@
                 ],
                 "linkProperties": [
                     {},
+                    {},
                     {}
                 ],
                 "connections": [
@@ -700,6 +751,11 @@
                         "srcPin": "g_Source",
                         "dstNode": "DrawCS",
                         "dstPin": "g_Source"
+                    },
+                    {
+                        "srcPin": "g_Occupancy",
+                        "dstNode": "OccupancyCS",
+                        "dstPin": "g_Occupancy"
                     },
                     {
                         "srcPin": "g_Radiance",
@@ -750,13 +806,19 @@
                 "linkProperties": [
                     {},
                     {},
+                    {},
                     {}
                 ],
                 "connections": [
                     {
                         "srcPin": "g_Source",
-                        "dstNode": "Propagate5CS",
+                        "dstNode": "DrawCS",
                         "dstPin": "g_Source"
+                    },
+                    {
+                        "srcPin": "g_Occupancy",
+                        "dstNode": "OccupancyCS",
+                        "dstPin": "g_Occupancy"
                     },
                     {
                         "srcPin": "g_Upper",
@@ -800,7 +862,7 @@
                 "connections": [
                     {
                         "srcPin": "g_Source",
-                        "dstNode": "Propagate0CS",
+                        "dstNode": "DrawCS",
                         "dstPin": "g_Source"
                     },
                     {
@@ -821,6 +883,66 @@
                     "variable": {
                         "name": "iResolution"
                     }
+                }
+            }
+        },
+        {
+            "resourceTexture": {
+                "name": "Occupancy",
+                "editorPos": [
+                    53.0,
+                    250.0
+                ],
+                "format": {
+                    "format": "R8_Unorm"
+                },
+                "size": {
+                    "variable": {
+                        "name": "iResolution"
+                    },
+                    "divide": [
+                        8,
+                        8,
+                        1
+                    ]
+                }
+            }
+        },
+        {
+            "actionComputeShader": {
+                "name": "OccupancyCS",
+                "editorPos": [
+                    53.0,
+                    180.0
+                ],
+                "linkProperties": [
+                    {},
+                    {}
+                ],
+                "connections": [
+                    {
+                        "srcPin": "g_Source",
+                        "dstNode": "DrawCS",
+                        "dstPin": "g_Source"
+                    },
+                    {
+                        "srcPin": "g_Occupancy",
+                        "dstNode": "Occupancy",
+                        "dstPin": "resource"
+                    }
+                ],
+                "shader": {
+                    "name": "Occupancy"
+                },
+                "dispatchSize": {
+                    "variable": {
+                        "name": "iResolution"
+                    },
+                    "divide": [
+                        8,
+                        8,
+                        1
+                    ]
                 }
             }
         }

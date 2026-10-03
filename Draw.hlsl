@@ -26,7 +26,7 @@ void main(uint2 DTid : SV_DispatchThreadID)
 		if (iColor == 0)
 			srcColor = float4(0, 0, 0, 1);
 		else if(iColor == 1)
-			srcColor = float4(float3(0.9f, 0.7f, 0.5f) * 10, 1);
+			srcColor = float4(float3(0.9f, 0.7f, 0.5f) * 5, 1);
 		else if (iColor == 2)
 			srcColor = float4(5, 0, 0, 1);
 		else if (iColor == 3)
