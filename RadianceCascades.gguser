@@ -2,20 +2,20 @@
     "version": "2.0",
     "snapshot": {
         "resourceViewNodeIndex": 5,
-        "resourceViewResourceIndex": 4,
+        "resourceViewResourceIndex": 5,
         "cameraPos": [
             0.005204167682677507,
             0.239883691072464,
             -9.993534088134766
         ],
         "cameraAltitudeAzimuth": [
-            -1.444380521774292,
-            2.348175048828125
+            -1.164380431175232,
+            0.8581773042678833
         ],
         "savedVariables": [
             {
                 "name": "iColor",
-                "value": "2"
+                "value": "3"
             }
         ]
     }

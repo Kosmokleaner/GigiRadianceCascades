@@ -8,9 +8,14 @@ void main(uint2 DTid : SV_DispatchThreadID)
 {
     float2 pxPos = DTid + 0.5f;
 
+	float2 uv = pxPos / /*$(Variable:iResolution)*/;
+
 	float4 sourceRGBA = g_Source[DTid];
 
-	float3 color = g_Mip3.SampleLevel(g_bilinear, pxPos / /*$(Variable:iResolution)*/, 0.0f).rgb;
+	float3 color = 0;
+
+	color += g_Mip2.SampleLevel(g_bilinear, uv, 0.0f).rgb;
+	color += g_Mip3.SampleLevel(g_bilinear, uv, 0.0f).rgb;
 
 	color = lerp(color, sourceRGBA.rgb, sourceRGBA.a);
 

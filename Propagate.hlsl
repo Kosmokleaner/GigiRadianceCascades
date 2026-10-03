@@ -23,7 +23,7 @@ void main(uint2 DTid : SV_DispatchThreadID)
 
 	float3 color;
 
-	const float d = 24.0f;
+	const float d = g_tileSize * 4;
 
 	float2 uv = (pxPos + d * sc) / /*$(Variable:iResolution)*/;
 
