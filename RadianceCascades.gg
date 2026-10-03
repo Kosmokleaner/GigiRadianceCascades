@@ -218,6 +218,17 @@
             "dflt": "1.0f, 1.0f",
             "visibility": "Host",
             "transient": true
+        },
+        {
+            "name": "iColor",
+            "type": "Int",
+            "dflt": "1",
+            "visibility": "User",
+            "UISettings": {
+                "UIHint": "Slider",
+                "min": "0",
+                "max": "4"
+            }
         }
     ],
     "shaders": [
@@ -280,6 +291,11 @@
             "resources": [
                 {
                     "name": "g_Source",
+                    "access": "SRV",
+                    "type": "Texture"
+                },
+                {
+                    "name": "g_Mip2",
                     "access": "SRV",
                     "type": "Texture"
                 },
@@ -375,7 +391,7 @@
         },
         {
             "actionComputeShader": {
-                "name": "PropagateCS",
+                "name": "Propagate2CS",
                 "editorPos": [
                     267.0,
                     -33.0
@@ -403,15 +419,21 @@
                     "variable": {
                         "name": "iResolution"
                     }
-                }
+                },
+                "defines": [
+                    {
+                        "name": "OUT_MIP",
+                        "value": "2"
+                    }
+                ]
             }
         },
         {
             "resourceTexture": {
                 "name": "Final",
                 "editorPos": [
-                    763.0,
-                    66.0
+                    1051.0,
+                    98.0
                 ],
                 "format": {
                     "format": "RGBA8_Unorm_sRGB"
@@ -427,10 +449,11 @@
             "actionComputeShader": {
                 "name": "FinalCS",
                 "editorPos": [
-                    747.0,
-                    -33.0
+                    1048.0,
+                    -30.0
                 ],
                 "linkProperties": [
+                    {},
                     {},
                     {},
                     {}
@@ -438,12 +461,17 @@
                 "connections": [
                     {
                         "srcPin": "g_Source",
-                        "dstNode": "PropagateCS",
+                        "dstNode": "Propagate3CS ",
                         "dstPin": "g_Source"
                     },
                     {
+                        "srcPin": "g_Mip2",
+                        "dstNode": "Downsample2CS",
+                        "dstPin": "g_MipOut"
+                    },
+                    {
                         "srcPin": "g_Mip3",
-                        "dstNode": "Downsample3",
+                        "dstNode": "Downsample3CS",
                         "dstPin": "g_MipOut"
                     },
                     {
@@ -466,8 +494,8 @@
             "resourceTexture": {
                 "name": "Mip3",
                 "editorPos": [
-                    347.0,
-                    82.0
+                    523.0,
+                    130.0
                 ],
                 "format": {
                     "format": "RGBA16_Float"
@@ -486,10 +514,10 @@
         },
         {
             "actionComputeShader": {
-                "name": "Downsample3",
+                "name": "Downsample3CS",
                 "editorPos": [
-                    512.0,
-                    32.0
+                    517.0,
+                    47.0
                 ],
                 "linkProperties": [
                     {},
@@ -498,7 +526,7 @@
                 "connections": [
                     {
                         "srcPin": "g_Radiance",
-                        "dstNode": "PropagateCS",
+                        "dstNode": "Propagate3CS ",
                         "dstPin": "g_Radiance"
                     },
                     {
@@ -519,7 +547,118 @@
                         8,
                         1
                     ]
+                },
+                "defines": [
+                    {
+                        "name": "OUT_MIP",
+                        "value": "3"
+                    }
+                ]
+            }
+        },
+        {
+            "actionComputeShader": {
+                "name": "Downsample2CS",
+                "editorPos": [
+                    277.0,
+                    50.0
+                ],
+                "linkProperties": [
+                    {},
+                    {}
+                ],
+                "connections": [
+                    {
+                        "srcPin": "g_Radiance",
+                        "dstNode": "Propagate2CS",
+                        "dstPin": "g_Radiance"
+                    },
+                    {
+                        "srcPin": "g_MipOut",
+                        "dstNode": "Mip2",
+                        "dstPin": "resource"
+                    }
+                ],
+                "shader": {
+                    "name": "Downsample"
+                },
+                "dispatchSize": {
+                    "variable": {
+                        "name": "iResolution"
+                    },
+                    "divide": [
+                        8,
+                        8,
+                        1
+                    ]
+                },
+                "defines": [
+                    {
+                        "name": "OUT_MIP",
+                        "value": "2"
+                    }
+                ]
+            }
+        },
+        {
+            "resourceTexture": {
+                "name": "Mip2",
+                "editorPos": [
+                    283.0,
+                    130.0
+                ],
+                "format": {
+                    "format": "RGBA16_Float"
+                },
+                "size": {
+                    "variable": {
+                        "name": "iResolution"
+                    },
+                    "divide": [
+                        4,
+                        4,
+                        1
+                    ]
                 }
+            }
+        },
+        {
+            "actionComputeShader": {
+                "name": "Propagate3CS ",
+                "editorPos": [
+                    512.0,
+                    -33.0
+                ],
+                "linkProperties": [
+                    {},
+                    {}
+                ],
+                "connections": [
+                    {
+                        "srcPin": "g_Source",
+                        "dstNode": "Propagate2CS",
+                        "dstPin": "g_Source"
+                    },
+                    {
+                        "srcPin": "g_Radiance",
+                        "dstNode": "Propagate2CS",
+                        "dstPin": "g_Radiance"
+                    }
+                ],
+                "shader": {
+                    "name": "Propagate"
+                },
+                "dispatchSize": {
+                    "variable": {
+                        "name": "iResolution"
+                    }
+                },
+                "defines": [
+                    {
+                        "name": "OUT_MIP",
+                        "value": "3"
+                    }
+                ]
             }
         }
     ]

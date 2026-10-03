@@ -1,6 +1,10 @@
 
 #include "common.hlsl"
 
+static uint g_tileSize = 1u << OUT_MIP;
+
+
+
 /*$(ShaderResources)*/
 
 [numthreads(8, 8, 1)]

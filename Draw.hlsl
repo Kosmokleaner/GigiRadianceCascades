@@ -15,11 +15,25 @@ void main(uint2 DTid : SV_DispatchThreadID)
 	float dist = length(pxPos - pxMousePos);
 	float mask = saturate(brushSize - dist);
 
-
 	float4 rgba = g_Source[DTid].rgba;
 
 	if(mouseInput.z == 1)
-		rgba = lerp(rgba, float4(1,1,1,1), mask);
+	{
+		float3 color = 0;
+
+		uint iColor = /*$(Variable:iColor)*/;
+
+		if(iColor == 1)
+			color = 1;
+		else if (iColor == 2)
+			color = float3(1,0,0);
+		else if (iColor == 3)
+			color = float3(0, 1, 0);
+		else if (iColor == 4)
+			color = float3(0, 0, 1);
+
+		rgba = lerp(rgba, float4(color,1), mask);
+	}
 	
 	g_Source[DTid] = rgba;
 }
