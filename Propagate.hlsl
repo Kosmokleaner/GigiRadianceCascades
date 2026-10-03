@@ -21,12 +21,12 @@ void main(uint2 DTid : SV_DispatchThreadID)
 	float angle = angleInt * (PI * 2 / g_tileSize / g_tileSize) + PI / 4;
 	float2 sc = float2(sin(angle), cos(angle));
 
-	float3 color;
+	float3 color = 0;
 
-	const float d = g_tileSize * 1;
+	const float d = 4;
 
 	float transmission = 1.0f;
-	for(uint step = 0; step < 8; ++step)
+	[loop] for(uint step = g_tileSize; step < g_tileSize * 2; ++step)
 	{
 		float2 uv = (pxPos + (step * d) * sc) / /*$(Variable:iResolution)*/;
 

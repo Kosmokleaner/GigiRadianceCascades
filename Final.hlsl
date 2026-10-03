@@ -16,6 +16,9 @@ void main(uint2 DTid : SV_DispatchThreadID)
 
 	float3 color = 0;
 
+	// ambient
+	color += 0.2f;
+
 	color += g_Mip1.SampleLevel(g_bilinear, uv, 0.0f).rgb * 1.0f;
 	color += g_Mip2.SampleLevel(g_bilinear, uv, 0.0f).rgb * 0.5f;
 	color += g_Mip3.SampleLevel(g_bilinear, uv, 0.0f).rgb * 0.25f;

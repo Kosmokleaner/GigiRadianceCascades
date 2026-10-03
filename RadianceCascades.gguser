@@ -3,14 +3,9 @@
     "snapshot": {
         "resourceViewNodeIndex": 5,
         "resourceViewResourceIndex": 6,
-        "cameraPos": [
-            0.005204167682677507,
-            0.239883691072464,
-            -9.993534088134766
-        ],
         "cameraAltitudeAzimuth": [
-            -0.7343812584877014,
-            1.3663578033447266
+            -1.079999566078186,
+            0.5249995589256287
         ],
         "savedVariables": [
             {
@@ -18,7 +13,11 @@
                 "value": "1"
             },
             {
-                "name": "clear",
+                "name": "iBrushSize",
+                "value": "11.421000"
+            },
+            {
+                "name": "Clear",
                 "value": "false"
             }
         ]

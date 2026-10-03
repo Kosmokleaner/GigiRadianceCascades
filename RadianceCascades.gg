@@ -231,6 +231,17 @@
             }
         },
         {
+            "name": "iBrushSize",
+            "type": "Float",
+            "dflt": "10",
+            "visibility": "User",
+            "UISettings": {
+                "UIHint": "Slider",
+                "min": "1",
+                "max": "100"
+            }
+        },
+        {
             "name": "Clear",
             "type": "Bool",
             "dflt": "false",
@@ -388,13 +399,14 @@
         {
             "resourceTexture": {
                 "name": "Source",
+                "comment": "HDR so we can store large emissive",
                 "editorPos": [
                     -85.0,
                     -46.0
                 ],
                 "transient": false,
                 "format": {
-                    "format": "RGBA8_Unorm_sRGB"
+                    "format": "RGBA16_Float"
                 },
                 "size": {
                     "variable": {

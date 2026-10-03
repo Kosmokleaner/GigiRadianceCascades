@@ -11,7 +11,7 @@ void main(uint2 DTid : SV_DispatchThreadID)
 
 	float2 pxMousePos = mouseInput.xy + 0.5f;
 
-	float brushSize = 10.0f;
+	float brushSize = /*$(Variable:iBrushSize)*/;
 	float dist = length(pxPos - pxMousePos);
 	float mask = saturate(brushSize - dist);
 
@@ -24,7 +24,7 @@ void main(uint2 DTid : SV_DispatchThreadID)
 		uint iColor = /*$(Variable:iColor)*/;
 
 		if(iColor == 1)
-			color = 1;
+			color = float3(0.9f,0.7f, 0.5f) * 10;
 		else if (iColor == 2)
 			color = float3(1,0,0);
 		else if (iColor == 3)
