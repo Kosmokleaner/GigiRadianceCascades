@@ -34,6 +34,9 @@ void main(uint2 DTid : SV_DispatchThreadID)
 
 		rgba = lerp(rgba, float4(color,1), mask);
 	}
+
+	if(/*$(Variable:Clear)*/)
+		rgba = 0;
 	
 	g_Source[DTid] = rgba;
 }
