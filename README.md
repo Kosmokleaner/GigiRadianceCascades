@@ -1,5 +1,9 @@
 # Gigi 2D Radiance Cascades technique
 
+"Radiance Cascades" is a very clever technique to propagate lighting efficiently and with high quality.
+It works best in 2D and this is a simple implantation with basic optimizations.
+See the paper by Alexander Sannikov for more details.
+
 * Realtime
 * Interactive, you can paint obstacles or emissive surfaces with the mouse
 
