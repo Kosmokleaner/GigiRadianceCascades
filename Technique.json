@@ -1,0 +1,11 @@
+{
+    "Title":"2D Radiance Cascades",
+    "Description":"'Radiance Cascades' is a very clever technique to propagate lighting efficiently and with high quality. It works best in 2D and this is a simple real-time implementation with basic optimizations. See the paper by Alexander Sannikov for more details.",
+    "Author":"Martin Mittring",
+    "Tags":"lighting, 2D, shadow",
+    "Technique": "RadianceCascades.gg",
+    "Website": "https://github.com/Kosmokleaner/GigiRadianceCascades",
+    "Screenshot":"Screenshot.png",
+    "License":"LICENSE",
+    "GigiVersion":"1.01.11",
+}
