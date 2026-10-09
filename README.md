@@ -1,5 +1,8 @@
 # Gigi 2D Radiance Cascades technique
 
+* Realtime
+* Interactive, you can paint obstacles or emissive surfaces with the mouse
+
 <img width="1227" height="724" alt="image" src="https://github.com/user-attachments/assets/6cef8275-d957-486c-bd9e-72426a03b1f9" />
 
 Radiance Cascades:
